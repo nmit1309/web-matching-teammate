@@ -1,0 +1,61 @@
+{
+  "entities": {
+    "User": {
+      "title": "User",
+      "description": "User profile information",
+      "type": "object",
+      "properties": {
+        "uid": { "type": "string" },
+        "fullName": { "type": "string" },
+        "email": { "type": "string" },
+        "university": { "type": "string" },
+        "skills": { "type": "array", "items": { "type": "string" } },
+        "majorProject": { "type": "string" },
+        "bio": { "type": "string" },
+        "role": { "type": "string", "enum": ["leader", "member"] },
+        "status": { "type": "string", "enum": ["searching", "in_team"] },
+        "isFirstLogin": { "type": "boolean" },
+        "avatarUrl": { "type": "string" },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uid", "fullName", "email"]
+    },
+    "Swipe": {
+      "title": "Swipe",
+      "description": "Records swipe actions (like/dislike)",
+      "type": "object",
+      "properties": {
+        "fromUid": { "type": "string" },
+        "toUid": { "type": "string" },
+        "type": { "type": "string", "enum": ["like", "dislike"] },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["fromUid", "toUid", "type"]
+    },
+    "Match": {
+      "title": "Match",
+      "description": "Records mutual likes",
+      "type": "object",
+      "properties": {
+        "uids": { "type": "array", "items": { "type": "string" } },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["uids"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "User",
+      "description": "Stores user profiles"
+    },
+    "/swipes/{swipeId}": {
+      "schema": "Swipe",
+      "description": "Stores individual swipe actions"
+    },
+    "/matches/{matchId}": {
+      "schema": "Match",
+      "description": "Stores successful matches"
+    }
+  }
+}
